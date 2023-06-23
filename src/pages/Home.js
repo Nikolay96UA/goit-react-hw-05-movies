@@ -6,9 +6,11 @@ function Home() {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    getMovies().then(responseObj => {
-      setMovies([...responseObj.results]);
-    });
+    getMovies()
+      .then(responseObj => {
+        setMovies([...responseObj.results]);
+      })
+      .catch(error => console.log(error));
   }, [movies]);
 
   return (

@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import { IMAGE_PATH } from 'APIService/API';
 import { CastImg, CastItem, CastList } from './MovieCast.styled';
 
+const defaultImg = `https://kartinkin.net/uploads/posts/2022-02/thumbs/1645764528_2-kartinkin-net-p-na-profil-kartinki-2.jpg`;
+
 function MovieCast() {
   const [cast, setCast] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -15,6 +17,7 @@ function MovieCast() {
     setIsLoading(true);
     getMoviesCredits(movieId)
       .then(res => setCast(res.cast))
+      .catch(error => console.log(error))
       .finally(setIsLoading(false));
   }, [movieId]);
 
@@ -28,11 +31,9 @@ function MovieCast() {
               <CastItem key={credit_id}>
                 <CastImg
                   src={
-                    profile_path ? (
-                      `${IMAGE_PATH}${profile_path}`
-                    ) : (
-                      <div>No image</div>
-                    )
+                    profile_path
+                      ? `${IMAGE_PATH}${profile_path}`
+                      : `${defaultImg}`
                   }
                   alt={characterName}
                 />{' '}

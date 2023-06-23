@@ -4,35 +4,55 @@ const TREND_DAY = 'trending/movie/day';
 export const IMAGE_PATH = 'https://image.tmdb.org/t/p/w300';
 
 export async function getMovies() {
-  return await fetch(`${BASE_URL}${TREND_DAY}?${API_KEY}`)
-    .then(response => response.json())
-    .catch(error => console.log(error));
+  return await fetch(`${BASE_URL}${TREND_DAY}?${API_KEY}`).then(response =>
+    response.json()
+  );
 }
 
 export async function searchMovies(query) {
-  return await fetch(`${BASE_URL}search/movie?${API_KEY}&query=${query}`)
-    .then(response => response.json())
-    .catch(error => console.log(error));
+  return await fetch(`${BASE_URL}search/movie?${API_KEY}&query=${query}`).then(
+    response => {
+      if (!response.ok) {
+        throw new Error('No data');
+      }
+
+      return response.json();
+    }
+  );
 }
 
 export async function getMovieDetails(movieId) {
-  return await fetch(`${BASE_URL}movie/${movieId}?${API_KEY}&language=en-US`)
-    .then(response => response.json())
-    .catch(error => console.log(error));
+  return await fetch(
+    `${BASE_URL}movie/${movieId}?${API_KEY}&language=en-US`
+  ).then(response => {
+    if (!response.ok) {
+      throw new Error('No data');
+    }
+
+    return response.json();
+  });
 }
 
 export async function getMoviesCredits(movieId) {
   return await fetch(
     `${BASE_URL}movie/${movieId}/credits?${API_KEY}&language=en-US`
-  )
-    .then(response => response.json())
-    .catch(error => console.log(error));
+  ).then(response => {
+    if (!response.ok) {
+      throw new Error('No data');
+    }
+
+    return response.json();
+  });
 }
 
 export async function getMoviesReviews(movieId) {
   return await fetch(
     `${BASE_URL}movie/${movieId}/reviews?${API_KEY}&language=en-US&page=1}`
-  )
-    .then(response => response.json())
-    .catch(error => console.log(error));
+  ).then(response => {
+    if (!response.ok) {
+      throw new Error('No data');
+    }
+
+    return response.json();
+  });
 }

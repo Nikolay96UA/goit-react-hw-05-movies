@@ -16,7 +16,7 @@ const posterSize = 'w400';
 function MovieDetails() {
   const location = useLocation();
   const backLink = useRef(location.state?.from ?? '/');
-  const [movieCart, setMovieCart] = useState({});
+  const [movieCart, setMovieCart] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const { movieId } = useParams();
@@ -25,6 +25,7 @@ function MovieDetails() {
     setIsLoading(true);
     getMovieDetails(movieId)
       .then(resultMovie => setMovieCart({ ...resultMovie }))
+      .catch(error => console.log(error))
       .finally(setIsLoading(false));
   }, [movieId]);
 
@@ -44,8 +45,8 @@ function MovieDetails() {
               <img
                 src={
                   poster_path
-                    ? baseImgUrl + posterSize + poster_path
-                    : defaultImg
+                    ? `${baseImgUrl}${posterSize}${poster_path}`
+                    : `${defaultImg}`
                 }
                 alt="img"
                 width="200"

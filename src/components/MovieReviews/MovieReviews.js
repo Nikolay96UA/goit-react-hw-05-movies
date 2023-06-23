@@ -14,9 +14,9 @@ function MovieReviews() {
     setIsLoading(true);
     getMoviesReviews(movieId)
       .then(res => setReviews(res.results))
+      .catch(error => console.log(error))
       .finally(setIsLoading(false));
-    console.log(reviews);
-  }, [movieId, reviews]);
+  }, [movieId]);
 
   return (
     <>

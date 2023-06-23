@@ -9,16 +9,16 @@ import TrendingMovie from '../components/TrendingMovie/TrendingMovie';
 function Movies() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchFilm, setFilm] = useState([]);
-  const [totalResults, setTotalResults] = useState(1);
   const filterText = searchParams.get('query') ?? '';
 
   useEffect(() => {
     if (!filterText) return;
-    searchMovies(filterText).then(response => {
-      setTotalResults(response.total_results);
-      setFilm([...response.results]);
-    });
-  }, [filterText, totalResults]);
+    searchMovies(filterText)
+      .then(response => {
+        setFilm([...response.results]);
+      })
+      .catch(error => console.log(error));
+  }, [filterText]);
 
   const handleSubmit = evt => {
     evt.preventDefault();
@@ -31,7 +31,7 @@ function Movies() {
   return (
     <>
       <Search handleSubmit={handleSubmit} value={filterText} />
-      {totalResults !== 0 ? (
+      {searchFilm.length > 0 ? (
         <TrendingMovie movies={searchFilm} />
       ) : (
         <p style={{ margin: '0.5em' }}>There are no results!</p>
